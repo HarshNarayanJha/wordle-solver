@@ -20,6 +20,7 @@ browser.get("https://www.nytimes.com/games/wordle/index.html")
 
 wait = WebDriverWait(browser, 10)
 
+
 def perform_prelude() -> None:
     try:
         agree_button = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "purr-blocker-card__button")))
@@ -33,6 +34,7 @@ def perform_prelude() -> None:
 
     _modal_close = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "Modal-module_closeIcon__TcEKb")))
     _modal_close.click()
+
 
 perform_prelude()
 
@@ -58,7 +60,9 @@ for i in range(6):
         browser.find_element(By.TAG_NAME, "body").send_keys(letter)
     browser.find_element(By.TAG_NAME, "body").send_keys("\ue007")
 
-    sleep(5)
+    print(f"Trying {guess}")
+
+    sleep(3.5)
 
     curr = rows[i]
     letters = curr.find_elements(By.CLASS_NAME, "Tile-module_tile__UWEHN")
@@ -74,10 +78,12 @@ for i in range(6):
             case "correct":
                 result += "="
 
+    print(f"Result: {result}")
+
     if result == "=" * solver.WORD_LENGTH:
         print(f'\nToday\'s Wordle Solution is: "{guess}", solved in {i + 1} guesses')
         browser.quit()
         break
 
     solver.update_possible_words(guess, result)
-    sleep(3)
+    sleep(1)
