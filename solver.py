@@ -43,7 +43,7 @@ class WordleSolver:
                         except KeyError:
                             pass
 
-        self.possible_words = solver.match(self.word_vector, self.possible_words)
+        self.possible_words = self.match(self.word_vector, self.possible_words)
 
     def match(self, word_vector: list[set[str]], possible_words: list[str]) -> list[str]:
         return [word for word in possible_words if self.match_word_vector(word, word_vector)]
